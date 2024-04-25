@@ -44,9 +44,6 @@ class EmployeeController extends Controller
             'salary' => $request->salary,
             'nid' => $request->nid,
             
-
-
-
         ]);
         toastr()->addSuccess('Employee Created.');
 
@@ -55,7 +52,7 @@ class EmployeeController extends Controller
 
     public function employee_list()
     {
-         $employee = Employee::all();
+        $employee = Employee::all();
         return view('page.EmployeeList', compact('employee'));
     }
 
@@ -101,6 +98,9 @@ class EmployeeController extends Controller
     {
         $employee = Employee::find($id);
         $employee->delete();
+
+        toastr()->addSuccess('Opps Employee Deleted.');
+
         return back();
     }
     public function employee_view($id)

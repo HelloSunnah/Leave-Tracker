@@ -17,31 +17,36 @@
               <table class="table datatable">
                 <thead>
                   <tr>
-                    <th>Name</th>
-                    <th>Image</th>
-                    <th>Address</th>
+                  <th>Employee Id</th>
+                  <th>Name</th>
+                  <th>Address</th>
                     <th >Salary</th>
+                    <th>NId</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
             
                   @foreach($employee as $data)
+
                   <tr>
+                  <td>{{$data->employee_id}}</td>
                   <td>{{$data->name}}</td>
                   <td>
-                  <img class="" src="{{ asset('/uploads/image/' . $data->image) }}" style="height: 100px;width:100px" alt="No Image">
-
+{{$data->pre_address}}
                   </td>
-                  <td>{{$data->par_address}}</td>
+                
                   <td>{{$data->salary}}</td> 
+                  <td>
+                    {{$data->nid}}
+                  </td>
                     <td>
                     <a href="{{route('employee.edit',$data->id)}}" class="btn btn-primary">Edit</a>
                     <a href="{{route('employee.delete',$data->id)}}" class="btn btn-danger">Delete</a>
                     <a href="{{route('employee.view',$data->id)}}" class="btn btn-success">View</a>
                     </td>
                   </tr>
-                    @endforeach
+                  @endforeach
                 
                 </tbody>
               </table>
