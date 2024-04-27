@@ -49,3 +49,12 @@
     password: 12345678
     ```
 4. After logging in, you will be redirected to the dashboard.
+
+ ## For Employee:
+  When you create a employee there will create e user also.And credential will
+  
+ ```
+    username: what you have provided
+    password: 12345678
+    ```
+   
