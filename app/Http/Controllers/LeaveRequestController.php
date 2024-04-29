@@ -3,9 +3,15 @@
 namespace App\Http\Controllers;
 
 use DateTime;
+use Carbon\Carbon;
+use App\Models\Employee;
 use App\Models\LeaveRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\LeaveStatusNotification;
+use App\Mail\LeaveRequestNotification;
+use Illuminate\Support\Facades\Validator;
 
 class LeaveRequestController extends Controller
 {
@@ -15,71 +21,88 @@ class LeaveRequestController extends Controller
         $leave = LeaveRequest::all();
         return view('Backend/Pages/Leave_Request/RequestList', compact('leave'));
     }
+
     // for admin leave list update
     public function leave_update(Request $request, $id)
     {
         $leave = LeaveRequest::findOrFail($id);
-
         $action = $request->input('action');
+        $employee = Employee::where('user_id', $leave->employee_id)->firstOrFail();
 
         if ($action === 'approve') {
             $leave->status = 1;
-            $leave->save();
-
-            session()->flash('success', 'Leave request approved successfully!');
-
-            return redirect()->route('leave.request.list');
+            $message = 'approved';
         } elseif ($action === 'cancel') {
             $leave->status = 2;
-            $leave->save();
-
-            session()->flash('success', 'Leave request cancelled successfully!');
-
-            return redirect()->route('leave.request.list');
+            $message = 'cancelled';
         } else {
             return back()->withErrors(['action' => 'Invalid action provided.']);
         }
+
+        // Send email notification to the employee
+        $employeeEmail = Employee::where('id', $leave->employee_id)->value('email');
+        Mail::to($employeeEmail)
+            ->send(new LeaveStatusNotification($leave, $message, $employee));
+
+        $leave->save();
+
+        session()->flash('success', 'Leave request ' . $message . ' successfully.');
+
+        return redirect()->route('leave.request.list');
     }
 
-
-
     // for employee leave create function
-
-
     public function leave_request()
     {
-        $leave = LeaveRequest::all();
+        $leave = LeaveRequest::where('user_id', Auth::user()->id)->get();
         return view('Backend/Pages/Leave_Request/CreateRequest', compact('leave'));
     }
 
     public function employee_leave(Request $request)
     {
-        $request->validate([
-
-            'leave_type' => 'required',
-            'start_date' => 'required',
+        // Validate the request data
+        $validator = Validator::make($request->all(), [
+            'leave_type' => 'required|string',
+            'start_date' => 'required|date',
         ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator);
+        }
+
+        // Extract request data
         $start_date = $request->input('start_date');
         $end_date = $request->input('end_date');
 
-        $duration = (new DateTime($end_date))->diff(new DateTime($start_date))->days;
+        // Calculate leave duration
+        $duration = Carbon::parse($start_date)->diffInDays(Carbon::parse($end_date));
 
+        // Retrieve the logged-in employee
+        $employee = Employee::where('user_id', Auth::user()->id)->firstOrFail();
 
-        LeaveRequest::create([
-            'employee_id' => Auth::user()->id,
+        // Create the leave request
+        $leaveRequest = LeaveRequest::create([
+            'employee_id' => $employee->id,
+            'user_id' => Auth::user()->id,
             'leave_type' => $request->leave_type,
             'start_date' => $start_date,
             'end_date' => $end_date,
             'reason' => $request->reason,
             'duration' => $duration,
-
         ]);
-        return back();
+
+        // Send email notification to the employee
+        $employeeEmail = $employee->email;
+        Mail::to($employeeEmail)->queue(new LeaveRequestNotification($employee, $leaveRequest));
+
+        // Redirect back with success message
+        return back()->with('success', 'Leave request submitted successfully.');
     }
-    public function remove_request($id){
-        $leave_request=LeaveRequest::find($id);
+
+    public function remove_request($id)
+    {
+        $leave_request = LeaveRequest::find($id);
         $leave_request->delete();
         return back();
-
     }
 }

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('leave_requests', function (Blueprint $table) {
             $table->id();
             $table->foreignId('employee_id');
+            $table->foreignId('user_id');
             $table->string('leave_type');
             $table->string('reason')->nullable();
             $table->string('start_date');

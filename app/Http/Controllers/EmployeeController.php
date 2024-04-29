@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Employee;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class EmployeeController extends Controller
 {
@@ -47,11 +49,20 @@ class EmployeeController extends Controller
             $fileName = time() . '.' . $request->file('image')->getclientOriginalExtension();
             $request->file('image')->move(public_path('/uploads/image'), $fileName);
         }
+        $user = User::create([
 
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->mobile,
+            'password' => Hash::make('12345678'),
+          
+
+        ]);
 
         Employee::create([
 
             'name' => $request->name,
+            'user_id' => $user->id,
             'image' => $fileName,
             'designation' => $request->designation,
             'age' => $request->age,
@@ -63,7 +74,8 @@ class EmployeeController extends Controller
             'salary' => $request->salary,
             'nid' => $request->nid,
 
-        ]);
+        ]);  
+       
 
         return to_route('employees.index');
     }
@@ -131,6 +143,7 @@ class EmployeeController extends Controller
             'image' => $imageName,
         ]);
 
+          
         return to_route('employees.index');
     }
     /**

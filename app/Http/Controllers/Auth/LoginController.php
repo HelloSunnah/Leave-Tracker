@@ -53,7 +53,7 @@ class LoginController extends Controller
             if (auth()->user()->role == 1) {
                 return redirect()->route('dashboard');
             }else{
-                return redirect()->route('dashboard');
+                return redirect()->route('leave.request');
             }
         }else{
             return redirect()->route('login')
