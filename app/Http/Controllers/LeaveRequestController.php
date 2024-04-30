@@ -94,7 +94,7 @@ class LeaveRequestController extends Controller
         // Send email notification to the employee
         $employeeEmail = $employee->email;
         Mail::to($employeeEmail)->queue(new LeaveRequestNotification($employee, $leaveRequest));
-
+        toastr()->addSuccess('Leave request submitted successfully.');
         // Redirect back with success message
         return back()->with('success', 'Leave request submitted successfully.');
     }
@@ -103,6 +103,8 @@ class LeaveRequestController extends Controller
     {
         $leave_request = LeaveRequest::find($id);
         $leave_request->delete();
+        toastr()->addSuccess('Request Removed...');
+
         return back();
     }
 }

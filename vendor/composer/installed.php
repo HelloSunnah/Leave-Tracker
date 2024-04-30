@@ -1,15 +1,24 @@
 <?php return array(
     'root' => array(
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => NULL,
+        'reference' => '946323e72e779fabbc1335414d518e6284574b90',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
     'versions' => array(
+        'brian2694/laravel-toastr' => array(
+            'pretty_version' => '5.59',
+            'version' => '5.59.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../brian2694/laravel-toastr',
+            'aliases' => array(),
+            'reference' => '60f90a7b25973549c3992b3dc5965d4f0e27838c',
+            'dev_requirement' => false,
+        ),
         'brick/math' => array(
             'pretty_version' => '0.11.0',
             'version' => '0.11.0.0',
@@ -380,12 +389,12 @@
             'dev_requirement' => false,
         ),
         'laravel/laravel' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => NULL,
+            'reference' => '946323e72e779fabbc1335414d518e6284574b90',
             'dev_requirement' => false,
         ),
         'laravel/pint' => array(
@@ -601,6 +610,42 @@
             'reference' => '4f7fd7836c6f332bb2933569e566a0d6c4cbed74',
             'dev_requirement' => true,
         ),
+        'php-flasher/flasher' => array(
+            'pretty_version' => 'v1.15.14',
+            'version' => '1.15.14.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../php-flasher/flasher',
+            'aliases' => array(),
+            'reference' => '33ae74e73f62814fff4e78e78f912d9b6ddf82d0',
+            'dev_requirement' => false,
+        ),
+        'php-flasher/flasher-laravel' => array(
+            'pretty_version' => 'v1.15.14',
+            'version' => '1.15.14.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../php-flasher/flasher-laravel',
+            'aliases' => array(),
+            'reference' => 'c2777483fd7074087c16f861ce2191a95088e7c6',
+            'dev_requirement' => false,
+        ),
+        'php-flasher/flasher-toastr' => array(
+            'pretty_version' => 'v1.15.14',
+            'version' => '1.15.14.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../php-flasher/flasher-toastr',
+            'aliases' => array(),
+            'reference' => 'c25755ffa01b9bf3e3a10d883f9914c63c6aedc3',
+            'dev_requirement' => false,
+        ),
+        'php-flasher/flasher-toastr-laravel' => array(
+            'pretty_version' => 'v1.15.14',
+            'version' => '1.15.14.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../php-flasher/flasher-toastr-laravel',
+            'aliases' => array(),
+            'reference' => 'fe24ad128ac4a42adb5f7b2cd54e349c1b0235c4',
+            'dev_requirement' => false,
+        ),
         'phpoption/phpoption' => array(
             'pretty_version' => '1.9.2',
             'version' => '1.9.2.0',
@@ -766,8 +811,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0|2.0|3.0',
-                1 => '3.0.0',
+                0 => '3.0.0',
+                1 => '1.0|2.0|3.0',
             ),
         ),
         'psr/simple-cache' => array(

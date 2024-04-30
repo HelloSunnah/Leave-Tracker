@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use toastr;
+
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -76,6 +78,7 @@ class EmployeeController extends Controller
 
         ]);  
        
+        toastr()->addSuccess('Employee Created Successfully');
 
         return to_route('employees.index');
     }
@@ -143,7 +146,8 @@ class EmployeeController extends Controller
             'image' => $imageName,
         ]);
 
-          
+        toastr()->addSuccess('Employee Updated Successfully');
+
         return to_route('employees.index');
     }
     /**
@@ -153,6 +157,8 @@ class EmployeeController extends Controller
     {
         $employee = Employee::find($id);
         $employee->delete();
+        toastr()->addSuccess('Opps!Employee Deleted');
+
         return back();
     }
 }

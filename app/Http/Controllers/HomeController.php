@@ -66,6 +66,8 @@ class HomeController extends Controller
             'password' => Hash::make($request->password),
 
         ]);
+        toastr()->addSuccess('Password Updated..');
+
         return back();
     }
     
