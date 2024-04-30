@@ -1,153 +1,105 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Leave Tracker</title>
+    <link rel="stylesheet" type="text/css" href="slide navbar style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Jost', sans-serif;
+            background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+        }
 
-    <title>Task management</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
+        .main {
+            width: 350px;
+            height: 500px;
+            background: red;
+            overflow: hidden;
+            background: url("https://doc-08-2c-docs.googleusercontent.com/docs/securesc/68c90smiglihng9534mvqmq1946dmis5/fo0picsp1nhiucmc0l25s29respgpr4j/1631524275000/03522360960922298374/03522360960922298374/1Sx0jhdpEpnNIydS4rnN4kHSJtU1EyWka?e=view&authuser=0&nonce=gcrocepgbb17m&user=03522360960922298374&hash=tfhgbs86ka6divo3llbvp93mg4csvb38") no-repeat center/ cover;
+            border-radius: 10px;
+            box-shadow: 5px 20px 50px #000;
+        }
 
-    <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+        #chk {
+            display: none;
+        }
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.gstatic.com" rel="preconnect">
-    <link
-        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-        rel="stylesheet">
+        .signup {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
 
-    <!-- Vendor CSS Files -->
-    <link href="backend/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="backend/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="backend/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="backend/assets/vendor/quill/quill.snow.css" rel="stylesheet">
-    <link href="backend/assets/vendor/quill/quill.bubble.css" rel="stylesheet">
-    <link href="backend/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-    <link href="backend/assets/vendor/simple-datatables/style.css" rel="stylesheet">
+        label {
+            color: #fff;
+            font-size: 2.3em;
+            justify-content: center;
+            display: flex;
+            margin: 60px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: .5s ease-in-out;
+        }
 
-    <!-- Template Main CSS File -->
-    <link href="backend/assets/css/style.css" rel="stylesheet">
+        input {
+            width: 60%;
+            height: 20px;
+            background: #e0dede;
+            justify-content: center;
+            display: flex;
+            margin: 20px auto;
+            padding: 10px;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+        }
 
+        button {
+            width: 60%;
+            height: 40px;
+            margin: 10px auto;
+            justify-content: center;
+            display: block;
+            color: #fff;
+            background: #573b8a;
+            font-size: 1em;
+            font-weight: bold;
+            margin-top: 20px;
+            outline: none;
+            border: none;
+            border-radius: 5px;
+            transition: .2s ease-in;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #6d44b8;
+        }
+
+    </style>
 </head>
 
 <body>
+    <div class="main">
+        <input type="checkbox" id="chk" aria-hidden="true">
 
-    <main>
-        <div class="container">
-
-            <section
-                class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
-
-                            {{-- <div class="d-flex justify-content-center py-4">
-                                <a href="index.html" class="logo d-flex align-items-center w-auto">
-                                    <img src="assets/img/logo.png" alt="">
-                                    <span class="d-none d-lg-block">Task Management</span>
-                                </a>
-                            </div><!-- End Logo --> --}}
-
-                            <div class="card mb-3">
-
-                                <div class="card-body">
-
-                                    <div class="pt-4 pb-2">
-                                        <h5 class="card-title text-center pb-0 fs-4">Login</h5>
-                                        <p class="text-center small">Enter your email & password to login</p>
-                                    </div>
-
-                                    <form class="row g-3 needs-validation" novalidate method="POST"
-                                        action="{{ route('login') }}">
-                                        @csrf
-                                        <div class="col-12">
-                                            <label for="yourUsername" class="form-label">Email</label>
-                                            <div class="input-group has-validation">
-                                                <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                                <input id="email" type="email" name="email"
-                                                    class="form-control @error('email') is-invalid @enderror"
-                                                    id="yourUsername" required value="{{ old('email') }}"
-                                                    autocomplete="email" autofocus>
-
-                                                <div class="invalid-feedback">
-
-                                                    @error('email')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-
-                                        <div class="col-12">
-                                            <label for="yourPassword" class="form-label">Password</label>
-                                            <input type="password" name="password"
-                                                class="form-control @error('password') is-invalid @enderror"
-                                                id="password" required autocomplete="current-password">
-                                            <div class="invalid-feedback">
-                                                @error('password')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                @enderror
-                                            </div>
-                                        </div>
-
-                                        <div class="col-12">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="remember"
-                                                    value="true" id="rememberMe">
-                                                <label class="form-check-label" for="rememberMe">Remember me</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <button class="btn btn-primary w-100" type="submit">Login</button>
-                                        </div>
-                                        <div class="col-12">
-                                            @if (Route::has('password.request'))
-                                                {{-- <a class="btn btn-link" href="{{ route('password.request') }}">
-                                                    {{ __('Forgot Your Password?') }}
-                                                </a> --}}
-                                            @endif
-                                        </div>
-                                    </form>
-
-                                </div>
-                            </div>
-
-
-
-                        </div>
-                    </div>
-                </div>
-
-            </section>
-
+        <div class="signup">
+        <form novalidate method="POST" action="{{ route('login') }}">
+                @csrf
+                <label for="chk" aria-hidden="true">Sign up</label>
+                <input id="email" type="email" name="email" class="form-control @error('email') is-invalid @enderror" id="" required value="{{ old('email') }}" autocomplete="email" autofocus> 
+                <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="password" required autocomplete="current-password">
+                <button class="btn btn-primary w-100" type="submit">Login</button>
+            </form>
         </div>
-    </main>
-
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-            class="bi bi-arrow-up-short"></i></a>
-
-    <!-- Vendor JS Files -->
-    <script src="backend/assets/vendor/apexcharts/apexcharts.min.js"></script>
-    <script src="backend/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="backend/assets/vendor/chart.js/chart.min.js"></script>
-    <script src="backend/assets/vendor/echarts/echarts.min.js"></script>
-    <script src="backend/assets/vendor/quill/quill.min.js"></script>
-    <script src="backend/assets/vendor/simple-datatables/simple-datatables.js"></script>
-    <script src="backend/assets/vendor/tinymce/tinymce.min.js"></script>
-    <script src="backend/assets/vendor/php-email-form/validate.js"></script>
-
-    <!-- Template Main JS File -->
-    <script src="backend/assets/js/main.js"></script>
-
+    </div>
 </body>
 
 </html>
